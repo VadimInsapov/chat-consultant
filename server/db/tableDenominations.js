@@ -16,4 +16,18 @@ module.exports = {
             USER_ID: "user_id",
         }
     },
+    CHANNEL: {
+        tableName: "channel",
+        columns: {
+            ID: "id",
+            DOMAIN: "domain",
+        }
+    },
+    EMPLOYEE_CHANNEL: {
+        tableName: "employee_channel",
+        columns: {
+            EMPLOYEE_ID: "employee_id",
+            CHANNEL_ID: "chanel_id",
+        }
+    },
 }
