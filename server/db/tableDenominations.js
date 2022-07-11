@@ -27,7 +27,14 @@ module.exports = {
         tableName: "employee_channel",
         columns: {
             EMPLOYEE_ID: "employee_id",
-            CHANNEL_ID: "chanel_id",
+            CHANNEL_ID: "channel_id",
+            ROLE: {
+                columnName: "role",
+                values: {
+                    ADMIN: "ADMIN",
+                    MODERATOR: "MODERATOR",
+                }
+            },
         }
     },
 }

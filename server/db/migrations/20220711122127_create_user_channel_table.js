@@ -9,6 +9,7 @@ exports.up = function(knex) {
         .createTable(EMPLOYEE_CHANNEL.tableName, function (table) {
             table.integer(EMPLOYEE_CHANNEL.columns.EMPLOYEE_ID).references(`${EMPLOYEE.tableName}.${EMPLOYEE.columns.ID}`);
             table.integer(EMPLOYEE_CHANNEL.columns.CHANNEL_ID).references(`${CHANNEL.tableName}.${CHANNEL.columns.ID}`);
+            table.string(EMPLOYEE_CHANNEL.columns.ROLE.columnName, 255).notNullable();
         });
 };
 
