@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Profile = () => {
+const Dialogs = () => {
     return (
         <div>
-            Profile
+            Dialogs
         </div>
     );
 };
 
-export default Profile;
+export default Dialogs;

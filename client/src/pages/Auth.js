@@ -1,12 +1,20 @@
 import React from 'react';
 import {Button, Card, Container, Form} from "react-bootstrap";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
-import {useLocation, NavLink} from "react-router-dom";
+import {useLocation, NavLink, useNavigate } from "react-router-dom";
+import {SetTokenContext} from "../components/AppRouter";
 
 const Auth = () => {
+    let navigate = useNavigate();
     const location = useLocation();
     const isLogin = location.pathname === LOGIN_ROUTE;
-    console.log(location);
+    const setToken = React.useContext(SetTokenContext);
+    function buttonHandler() {
+        if (isLogin) {
+            setToken({token:"ss"})
+            window.location.reload(false);
+        }
+    }
     return (
         <div>
             <Container
@@ -42,18 +50,19 @@ const Auth = () => {
                         }
                         <Button
                             className="mt-3 align-self-center w-50"
+                            onClick={buttonHandler}
                         >
                             {isLogin ? "войти" : "зарегистроваться"}
                         </Button>
                         {isLogin ?
                             <NavLink
                                 className="mt-2 align-self-center text-success"
-                                to="/registration"
+                                to={REGISTRATION_ROUTE}
                             >зарегистрироваться</NavLink>
                             :
                             <NavLink
                                 className="mt-2 align-self-center text-success"
-                                to="/login"
+                                to={LOGIN_ROUTE}
                             >авторизоваться</NavLink>
                         }
 

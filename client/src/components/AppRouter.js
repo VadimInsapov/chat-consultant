@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Routes, Route, Redirect, Navigate} from 'react-router-dom';
 import {authRoutes, publicRoutes} from "../routes";
-import {WELCOME_ROUTE} from "../utils/consts";
+import {PANEL_ROUTE, WELCOME_ROUTE} from "../utils/consts";
 
 function setToken(userToken) {
     sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -13,22 +13,33 @@ function getToken() {
     return userToken?.token
 }
 
+export const SetTokenContext = React.createContext();
 const AppRouter = () => {
-    // const token = getToken();
-    const token = true;
+    const token = getToken();
     return (
-        <Routes>
-            {token && authRoutes.map(({path, Component}) =>
-                <Route key={path} path={path} element={<Component/>}></Route>
-            )}
-            {publicRoutes.map(({path, Component}) =>
-                <Route key={path} path={path} element={<Component/>}></Route>
-            )}
-            <Route
-                path="*"
-                element={<Navigate to={WELCOME_ROUTE} replace />}
-            />
-        </Routes>
+        <SetTokenContext.Provider value={setToken}>
+            {token ?
+                <Routes>
+                    {authRoutes.map(({path, Component}) =>
+                        <Route key={path} path={path} element={<Component/>}></Route>
+                    )}
+                    <Route
+                        path="*"
+                        element={<Navigate to={PANEL_ROUTE} replace/>}
+                    />
+                </Routes>
+                :
+                <Routes>
+                    {publicRoutes.map(({path, Component}) =>
+                        <Route key={path} path={path} element={<Component/>}></Route>
+                    )}
+                    <Route
+                        path="*"
+                        element={<Navigate to={WELCOME_ROUTE} replace/>}
+                    />
+                </Routes>
+            }
+        </SetTokenContext.Provider>
     );
 };
 

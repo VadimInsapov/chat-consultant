@@ -1,22 +1,25 @@
 import React, {useState} from 'react';
-import App from "../App";
 import Menu from "../components/Menu";
 import {Container} from "react-bootstrap";
-const modes = {
-    PROFILE: "profile",
-    CHANNELS: "channels",
-    DIALOGS: "dialogs"
-}
+import {modes} from "../utils/panelModes";
+import Profile from "../components/Profile";
+import Channels from "../components/Channels";
+import Dialogs from "../components/Dialogs";
+
 const Panel = () => {
     const [mode, setMode] = useState(modes.PROFILE);
-    return (
-        <div className="h-100">
-            <div className="d-flex bg-light">
-                <Menu/>
-                dd
+    let component;
+    if (mode)
+        return (
+            <div className="h-100">
+                <div className="d-flex bg-light">
+                    <Menu mode={mode} setMode={setMode}/>
+                    {modes.PROFILE === mode && <Profile/>}
+                    {modes.CHANNELS === mode && <Channels/>}
+                    {modes.DIALOGS === mode && <Dialogs/>}
+                </div>
             </div>
-        </div>
-    );
+        );
 };
 
 export default Panel;
