@@ -18,13 +18,17 @@ class ChannelController {
     async create(req, res) {
         try {
             const {domain, employeeId} = req.body;
-            if (await Channel.ExistsByDomain()) {
+            if (await Channel.ExistsByDomain(domain)) {
                 res.status(400).json({message: `Домен ${domain} уже существует!`});
                 return;
             }
             const channel = new Channel(domain, employeeId);
             const channelJsonFromDB = await channel.save();
-            res.status(200).json(channelJsonFromDB);
+            const channelURL = `http://localhost/channel/${channelJsonFromDB.id}`;
+            res.status(200).json(
+                {
+                    channelJsonFromDB, channelURL
+                });
         } catch (e) {
             console.log(e);
             res.status(400).json({message: "Ошибка создания канала"});
