@@ -8,12 +8,12 @@ const Message = require("../models/Message");
 require('dotenv').config({path: '../.env'});
 
 class MessageController {
-    async index(req, res) {
+    async index(chatId) {
         try {
-
+            const messages = await Message.getAllMessagesByChat(chatId);
+            return messages;
         } catch (e) {
             console.log(e);
-            res.status(400).json({message: "Ошибка просмотра сообщений!"});
         }
     }
 
@@ -30,10 +30,9 @@ class MessageController {
             }
             const message = new Message(userId, chatId, body);
             const messageJsonFromDB = await message.save();
-            console.log(messageJsonFromDB);
+            return messageJsonFromDB;
         } catch (e) {
             console.log(e);
-            res.status(400).json({message: "Ошибка создания сообщения!"});
         }
     }
 

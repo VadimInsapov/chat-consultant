@@ -8,7 +8,7 @@ class ChannelController {
         try {
             const {employeeId} = req.params;
             const channels = await Channel.getChannelsInfoByEmployee(employeeId);
-            console.log(channels);
+            res.status(200).json(channels);
         } catch (e) {
             console.log(e);
             res.status(400).json({message: "Ошибка просмтора каналов"});

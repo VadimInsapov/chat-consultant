@@ -1,6 +1,6 @@
 const knexConfig = require('../db/knexfile');
 const knex = require('knex')(knexConfig.development);
-const {USER, EMPLOYEE} = require("../db/tableDenominations");
+const {USER, EMPLOYEE, EMPLOYEE_CHAT} = require("../db/tableDenominations");
 const User = require("./User");
 
 class Employee extends User {
@@ -31,6 +31,16 @@ class Employee extends User {
     static async ExistsByEmail(email) {
         const employees = await knex(EMPLOYEE.tableName).where(EMPLOYEE.columns.EMAIL, email);
         return employees[0];
+    }
+
+    static async addEmployeeChatRelation(employeeId, chatId) {
+        const resRelation = await knex(EMPLOYEE_CHAT.tableName).insert(
+            {
+                [EMPLOYEE_CHAT.columns.EMPLOYEE_ID]: employeeId,
+                [EMPLOYEE_CHAT.columns.CHAT_ID]: chatId,
+            }
+        ).returning('*');
+        return resRelation;
     }
 }
 

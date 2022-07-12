@@ -48,8 +48,9 @@ class Channel {
             .whereIn(CHANNEL_ID, channelIds)
         const groupedChannelsAndAllEmployees = channelsAndAllEmployees.reduce((acc, val) => {
             const {channel_id, domain, ...user} = val;
-            if (!acc[val[CHANNEL.columns.DOMAIN]]) acc[val[CHANNEL.columns.DOMAIN]] = [];
-            acc[val[CHANNEL.columns.DOMAIN]].push(user);
+            const channelString = `${channel_id}|${val[CHANNEL.columns.DOMAIN]}`;
+            if (!acc[channelString]) acc[channelString] = [];
+            acc[channelString].push(user);
             return acc;
         }, {})
         return groupedChannelsAndAllEmployees;

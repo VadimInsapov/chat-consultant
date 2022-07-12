@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({path: '../.env'});
 
-class AuthController {
+class EmployeeController {
     async registration(req, res) {
         try {
             let {name, lastName, email, password} = req.body;
@@ -40,6 +40,17 @@ class AuthController {
             res.status(400).json({message: "Ошибка входа"});
         }
     }
+
+    async addToTheChat(req, res) {
+        try {
+            const {employeeId, chatId} = req.params;
+            const relationJsonFromDB = await Employee.addEmployeeChatRelation(employeeId, chatId);
+            res.status(300).json(relationJsonFromDB);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({message: "Ошибка входа"});
+        }
+    }
 }
 function genereateAccessToken (id) {
     const payload = {
@@ -47,4 +58,4 @@ function genereateAccessToken (id) {
     };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: "1000h"});
 }
-module.exports = new AuthController();
+module.exports = new EmployeeController();
