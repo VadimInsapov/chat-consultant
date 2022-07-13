@@ -3,8 +3,8 @@ import Menu from "../components/Menu";
 import {Container} from "react-bootstrap";
 import {modes} from "../utils/panelModes";
 import Profile from "../components/Profile";
-import Channels from "../components/Channels";
-import Dialogs from "../components/Dialogs";
+import Channels from "../components/channels/Channels";
+import Dialogs from "../components/dialogs/Dialogs";
 
 const Panel = () => {
     const [mode, setMode] = useState(modes.PROFILE);
