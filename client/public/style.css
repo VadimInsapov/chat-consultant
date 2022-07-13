@@ -5,11 +5,17 @@
 
 .menu-button:hover {
     cursor: pointer;
-    background-color: #ccc!important;
+    background-color: #ccc !important;
 }
+
 .menu-button.chosen {
-    background-color: #ccf!important;
+    background-color: #ccf !important;
 }
+
+.quests::-webkit-scrollbar {
+    display: none;
+}
+
 /*.menu-button.chosen-hover {*/
 /*    background-color: #ccf!important;*/
 /*}*/

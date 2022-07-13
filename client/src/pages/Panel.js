@@ -8,15 +8,30 @@ import Dialogs from "../components/dialogs/Dialogs";
 
 const Panel = () => {
     const [mode, setMode] = useState(modes.PROFILE);
-    let component;
     if (mode)
         return (
             <div className="h-100">
                 <div className="d-flex bg-light">
                     <Menu mode={mode} setMode={setMode}/>
                     {modes.PROFILE === mode && <Profile/>}
-                    {modes.CHANNELS === mode && <Channels/>}
-                    {modes.DIALOGS === mode && <Dialogs/>}
+
+                    {modes.CHANNELS === mode &&
+                        <div className="p-5"
+                             style={{
+                                 width: "85%",
+                                 background: "#F2F2EF"
+                             }}>
+                            <Channels/>
+                        </div>}
+                    {modes.DIALOGS === mode &&
+                        <div className="p-5"
+                             style={{
+                                 width: "85%",
+                                 background: "#F2F2EF"
+                             }}>
+                            <Dialogs/>
+                        </div>}
+
                 </div>
             </div>
         );
