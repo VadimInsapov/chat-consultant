@@ -3,7 +3,10 @@ import {Button, Card} from "react-bootstrap";
 import {SetTokenContext} from "./AppRouter";
 import {useNavigate } from "react-router-dom";
 
-const Profile = () => {
+
+
+const Profile = ({employee}) => {
+
     let navigate = useNavigate();
     const setToken = React.useContext(SetTokenContext);
     function buttonHandler() {
@@ -16,9 +19,9 @@ const Profile = () => {
                 width: '450px',
             }}>
                 <Card.Body>
-                    <Card.Title className="fs-3">Инсапов Вадим</Card.Title>
+                    <Card.Title className="fs-3">{employee.last_name} {employee.name}</Card.Title>
                     <Card.Text>
-                        insapovvadik@gmail.com
+                        {employee.email}
                     </Card.Text>
                     <Button variant="danger"
                     onClick={buttonHandler}

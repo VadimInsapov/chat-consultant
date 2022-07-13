@@ -1,6 +1,8 @@
 const Employee = require("../models/Employee");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require("../models/User");
+const {USER, EMPLOYEE} = require("../db/tableDenominations");
 require('dotenv').config({path: '../.env'});
 
 class EmployeeController {
@@ -24,7 +26,7 @@ class EmployeeController {
     async login(req, res) {
         try {
             const {email, password} = req.body;
-            const employeeJsonFromDB = await Employee.ExistsByEmail(email);
+            let employeeJsonFromDB = await Employee.ExistsByEmail(email);
             if (!await Employee.ExistsByEmail(email)) {
                 res.status(400).json({message: `Пользователь ${email} не найден!`});
                 return;
@@ -33,7 +35,12 @@ class EmployeeController {
             if (!validPassword) {
                 res.status(400).json({message: `Введён неверный пароль!`});
             }
-            const token = genereateAccessToken(employeeJsonFromDB["id"]);
+            delete employeeJsonFromDB.password;
+            const user = await User.getUserByID(employeeJsonFromDB[EMPLOYEE.columns.USER_ID]);
+            console.log(user)
+            employeeJsonFromDB = {...employeeJsonFromDB, ...user};
+            console.log(employeeJsonFromDB)
+            const token = genereateAccessToken(employeeJsonFromDB);
             res.status(200).json({token: token});
         } catch (e) {
             console.log(e);
@@ -52,10 +59,7 @@ class EmployeeController {
         }
     }
 }
-function genereateAccessToken (id) {
-    const payload = {
-        id
-    };
-    return jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: "1000h"});
+function genereateAccessToken (employeeJsonFromDB) {
+    return jwt.sign(employeeJsonFromDB, process.env.JWT_SECRET_KEY, {expiresIn: "1000h"});
 }
 module.exports = new EmployeeController();

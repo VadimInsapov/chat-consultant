@@ -1,7 +1,8 @@
 import Panel from "./pages/Panel";
-import Auth from "./pages/Auth";
+import Registration from "./pages/Registration";
 import Welcome from "./pages/Welcome";
 import {LOGIN_ROUTE, PANEL_ROUTE, REGISTRATION_ROUTE, WELCOME_ROUTE} from "./utils/consts";
+import Login from "./pages/Login";
 
 export const authRoutes = [
     {
@@ -13,11 +14,11 @@ export const authRoutes = [
 export const publicRoutes = [
     {
         path: LOGIN_ROUTE,
-        Component: Auth
+        Component: Login
     },
     {
         path: REGISTRATION_ROUTE,
-        Component: Auth
+        Component: Registration
     },
     {
         path: WELCOME_ROUTE,

@@ -21,7 +21,7 @@ const AppRouter = () => {
             {token ?
                 <Routes>
                     {authRoutes.map(({path, Component}) =>
-                        <Route key={path} path={path} element={<Component/>}></Route>
+                        <Route key={path} path={path} element={<Component token={token}/>}></Route>
                     )}
                     <Route
                         path="*"
