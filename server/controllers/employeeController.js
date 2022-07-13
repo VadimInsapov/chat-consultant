@@ -36,10 +36,8 @@ class EmployeeController {
                 res.status(400).json({message: `Введён неверный пароль!`});
             }
             delete employeeJsonFromDB.password;
-            const user = await User.getUserByID(employeeJsonFromDB[EMPLOYEE.columns.USER_ID]);
-            console.log(user)
+            const user = await Employee.getUserByID(employeeJsonFromDB[EMPLOYEE.columns.USER_ID]);
             employeeJsonFromDB = {...employeeJsonFromDB, ...user};
-            console.log(employeeJsonFromDB)
             const token = genereateAccessToken(employeeJsonFromDB);
             res.status(200).json({token: token});
         } catch (e) {

@@ -10,7 +10,16 @@ const channelHeader = {
 const channelRole = {
     background: "#A3A8A0"
 };
-const Channel = () => {
+const Channel = ({employee, channel}) => {
+    const domainInfo = channel[0];
+    const domainId = domainInfo.split("|")[0];
+    const domainName = domainInfo.split("|")[1];
+    const employees = channel[1];
+
+    const iAmInChannelM = employees.find(cur => cur.employee_id === employee.id);
+    const isAdmin = iAmInChannelM.role === "ADMIN"
+    const otherEmployeesInChannel = employees.filter(cur => cur.employee_id !== employee.id);
+
     const [popupActive, setPopupActive] = useState(false);
     return (
         <>
@@ -19,25 +28,29 @@ const Channel = () => {
             </Popup>
             <div className="p-4 w-100 border border-3 border-dark rounded mb-4">
                 <div
-                    className="d-flex mb-3 p-2 align-items-center justify-content-between">
+                    className="d-flex p-2 align-items-center justify-content-between">
                     <div>
                         <h4 className="d-inline text-white p-2 rounded"
                             style={channelHeader}
-                        >hh.ru
+                        >{domainName}
                         </h4>
                         <h4 className="d-inline p-1 border border-dark rounded ms-3"
-                        >Администратор
+                        >Я {isAdmin ? "Администратор" : "Модератор"}
                         </h4>
                     </div>
-                    <Button className="" variant="success">
-                        <div className="fs-5"
-                             onClick={() => setPopupActive(true)}
-                        >Добавить сотрудника
-                        </div>
-
-                    </Button>
+                    {isAdmin &&
+                        <Button className="" variant="success">
+                            <div className="fs-5"
+                                 onClick={() => setPopupActive(true)}
+                            >Добавить сотрудника
+                            </div>
+                        </Button>
+                    }
                 </div>
-                <Employees/>
+                {
+                    otherEmployeesInChannel.length !== 0 &&
+                    <Employees currentUserIsAdminInChat={isAdmin} employees={otherEmployeesInChannel}/>
+                }
             </div>
         </>
     );

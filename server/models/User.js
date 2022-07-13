@@ -1,7 +1,6 @@
 const {USER, EMPLOYEE_CHANNEL, CHANNEL} = require("../db/tableDenominations");
 const knexConfig = require("../db/knexfile");
 const knex = require("knex")(knexConfig.development);
-;
 
 class User {
     constructor(name, lastName) {

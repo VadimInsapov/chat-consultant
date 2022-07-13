@@ -1,27 +1,32 @@
 import React from 'react';
 import {Button} from "react-bootstrap";
 
-const Employees = () => {
+const rowStyle = {
+    height: "48px"
+}
+const Employees = ({employees, currentUserIsAdminInChat}) => {
     return (
-
-        <table className="table table-striped table-hover">
+        <table className="table table-hover mt-3">
             <tbody>
-            <tr className="align-middle">
-                <th scope="row">1</th>
-                <td>Инсапов Вадим</td>
-                <td>insapovvadik@mail.ru</td>
-                <td>Модератор</td>
-                <td className="d-flex gap-2 justify-content-end">
-                    <Button variant="warning">Назначить админом</Button>
-                    <Button variant="danger">X</Button>
-                </td>
-            </tr>
-            <tr className="align-middle">
-                <th scope="row">3</th>
-                <td>Инсапов Вадим</td>
-                <td>insapovvadik@mail.ru</td>
-                <td>Модератор</td>
-            </tr>
+            {employees.map((employee, index) => {
+                return (
+                    <tr key={index} className="align-middle" style={rowStyle}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{employee.last_name} {employee.name}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.role === "ADMIN" ? "администратор" : "модератор"}</td>
+                        {currentUserIsAdminInChat && employee.role === "MODERATOR" &&
+                        <td className="d-flex gap-2 justify-content-end">
+                            <Button variant="warning"
+                                    size="sm"
+                            >Назначить админом</Button>
+                            <Button variant="danger"
+                                    size="sm">X</Button>
+                        </td>
+                        }
+                    </tr>
+                )
+            })}
             </tbody>
         </table>
     );

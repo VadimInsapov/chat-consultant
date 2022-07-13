@@ -9,7 +9,6 @@ import jwtDecode from "jwt-decode";
 
 const Panel = ({token}) => {
     const employee = jwtDecode(token);
-    console.log(employee)
     const [mode, setMode] = useState(modes.PROFILE);
     if (mode)
         return (
@@ -24,7 +23,7 @@ const Panel = ({token}) => {
                                  width: "85%",
                                  background: "#F2F2EF"
                              }}>
-                            <Channels/>
+                            <Channels employee={employee}/>
                         </div>}
                     {modes.DIALOGS === mode &&
                         <div className="p-5"

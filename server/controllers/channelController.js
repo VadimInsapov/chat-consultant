@@ -24,10 +24,10 @@ class ChannelController {
             }
             const channel = new Channel(domain, employeeId);
             const channelJsonFromDB = await channel.save();
-            const channelURL = `http://localhost/channel/${channelJsonFromDB.id}`;
+            const channelScript = '<script src="' + `http://localhost/channel?channelId=${channelJsonFromDB.id}"` + ' async></script>';
             res.status(200).json(
                 {
-                    channelJsonFromDB, channelURL
+                    channelJsonFromDB, channelScript
                 });
         } catch (e) {
             console.log(e);

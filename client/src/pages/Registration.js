@@ -40,25 +40,25 @@ const Registration = () => {
                             className="mt-3"
                             placeholder="Введите email..."
                             name="email"
-                            onChange={e => handleChange(e)}
+                            onChange={handleChange}
                         />
                         <Form.Control
                             className="mt-3"
                             placeholder="Введите пароль..."
                             name="password"
-                            onChange={e => handleChange(e)}
+                            onChange={handleChange}
                         />
                         <Form.Control
                             className="mt-3"
                             placeholder="Введите своё имя..."
                             name="name"
-                            onChange={e => handleChange(e)}
+                            onChange={handleChange}
                         />
                         <Form.Control
                             className="mt-3"
                             placeholder="Введите свою фамилию..."
                             name="lastName"
-                            onChange={e => handleChange(e)}
+                            onChange={handleChange}
                         />
                         <Button
                             onClick={handleSubmit}
