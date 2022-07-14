@@ -2,7 +2,7 @@ import React from 'react';
 
 const Message = ({isMyMessage, author, body, time}) => {
     return (
-        <div className={isMyMessage ?"d-flex flex-column p-2 text-white align-items-end": "d-flex flex-column p-2 text-white align-items-start"}
+        <div className={isMyMessage ?"d-flex flex-column p-2 text-white message": "d-flex flex-column p-2 text-white align-items-start"}
              >
             <div className="mb-2">
                 <div className="d-inline  rounded text-dark pt-1 pb-1 ps-2 pe-2 "

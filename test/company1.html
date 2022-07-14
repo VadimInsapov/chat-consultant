@@ -5,14 +5,17 @@
     <meta charset="utf-8"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-        *{
-            border-size: border-box;
+
+        * {
+            font-size: 14px;
+            box-sizing: border-box;
             font-family: 'Roboto Mono', monospace;
         }
-        .block{
+
+        .block2 {
             position: fixed;
-            top: 39%;
-            left: 69%;
+            top: 37%;
+            left: 66%;
             bottom: 2%;
             right: 1%;
             z-index: 99999;
@@ -20,7 +23,8 @@
             justify-content: flex-end;
             flex-direction: column;
         }
-        .modal {
+
+        .modal2 {
             padding: 7px 9px 7px 9px;
             display: none;
             background: rgb(43, 46, 52);
@@ -65,17 +69,17 @@
         .modal_messages {
             border-radius: 3%;
             background: rgb(242, 242, 239);
-            height: 240px;
+            height: 280px;
             margin-top: 60px;
-            padding: 11px;
         }
 
         .modal_new-message {
             border-radius: 3%;
             background: rgb(242, 242, 239);
-            height: 90px;
+            height: 80px;
             margin-top: 20px;
             padding: 11px;
+            width: 100%;
         }
 
         .button-chat {
@@ -85,37 +89,66 @@
             border-radius: 3%;
             border: none;
             margin: 10px 0px 0px 0px;
-            padding: 13px;
-            color: white;
-            border-color: #198754;
-            background: #198754;
         }
-        .open_modal{
+
+        .open_modal {
             margin-top: 10px;
             text-decoration: none;
             text-align: center;
             background: rgb(43, 46, 52);
             color: rgb(242, 242, 239);;
-            padding: 10px 0px 10px 0px;
-            width: 98%;
-            height: 30px;
             border: solid black;
             border-radius: 3px;
             font-size: 18px;
+        }
+
+        .modal_messages::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .author {
+            background: #AE9ABE;
+        }
+
+        .message.my {
+            align-items: end;
+        }
+
+        .time {
+            color: #AE9ABE;
         }
     </style>
 </head>
 <body>
 <h1>Сайт компании 1</h1>
-<div class="block" id="block">
-    <div id="modal" class="modal bounceIn">
+<div class="block2" id="block2">
+    <div id="modal2" class="modal2 bounceIn">
         <div id="close_modal">+</div>
-        <div class="modal_messages">Текст в модальном окне</div>
-        <div class="modal_new-message">Текст в модальном окне</div>
-        <button id="button-chat" class="button-chat">Отправить</button>
+        <div id="modal_messages" class="modal_messages overflow-scroll">
+            <form id="greet" class="h-100 d-flex flex-column  justify-content-center align-items-center gap-2 p-3">
+                <h3>Знакомство</h3>
+                <input type="text" name="name" id="name" placeholder="Введите имя..." class="form-control">
+                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Введите фамилию..."/>
+                <input type="text" name="city" id="city" class="form-control" placeholder="Введите город..."/>
+            </form>
+            <div id="messages" class="h-100 p-2">
+                <div class="message d-flex flex-column mb-3">
+                    <div>
+                        <div class="author d-inline p-1 rounded">Инсапов Вадим</div>
+                    </div>
+                    <div class="body fs-6 border border-dark p-1 rounded mt-2">Lorem Lorem Lorem Lorem Lorem Lorem
+                        Lorem
+                        Lorem
+                    </div>
+                    <div class="time fw-bold">23.06.2000</div>
+                </div>
+            </div>
+        </div>
+        <textarea id="modal_new-message" class="modal_new-message"></textarea>
+        <button id="button-chat" type="button" class="btn btn-success button-chat">Отправить</button>
     </div>
-
-    <a class="open_modal" href="#open">Открыть консультант</a>
+    <button class="open_modal p-2 rounded">Открыть консультант</button>
 </div>
 
 
