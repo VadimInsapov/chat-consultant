@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from "react-bootstrap";
 import Employees from "./Employees";
 import Popup from "../../Popup/Popup";
@@ -10,21 +10,25 @@ const channelHeader = {
 const channelRole = {
     background: "#A3A8A0"
 };
-const Channel = ({employee, channel}) => {
-    const domainInfo = channel[0];
-    const domainId = domainInfo.split("|")[0];
-    const domainName = domainInfo.split("|")[1];
-    const employees = channel[1];
-
-    const iAmInChannelM = employees.find(cur => cur.employee_id === employee.id);
-    const isAdmin = iAmInChannelM.role === "ADMIN"
-    const otherEmployeesInChannel = employees.filter(cur => cur.employee_id !== employee.id);
-
+const Channel = ({allEmployees, curEmployee, channel, reload, setReload}) => {
     const [popupActive, setPopupActive] = useState(false);
+    const [reloadChannel, setReloadChannel] = useState(false);
+
+    const channelInfo = channel[0];
+    const channelId = channelInfo.split("|")[0];
+    const domainName = channelInfo.split("|")[1];
+    const employees = channel[1];
+    const iAmInChannelM = employees.find(cur => cur.employee_id === curEmployee.id);
+    const isAdmin = iAmInChannelM.role === "ADMIN"
+    const otherEmployeesInChannel = employees.filter(cur => cur.employee_id !== curEmployee.id);
+
+
     return (
         <>
             <Popup active={popupActive} setActive={setPopupActive}>
-                <PopupAddEmployeeToChannel setPopupActive={setPopupActive}/>
+                <PopupAddEmployeeToChannel reload={reload} setReload={setReload}
+                                           setPopupActive={setPopupActive} channelId={channelId}
+                                           allEmployees={allEmployees} employeesInChannel={employees}/>
             </Popup>
             <div className="p-4 w-100 border border-3 border-dark rounded mb-4">
                 <div

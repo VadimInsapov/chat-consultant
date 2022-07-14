@@ -43,6 +43,18 @@ class ChannelController {
             res.status(400).json({message: "Ошибка удаления канала"});
         }
     }
+
+    async getEmployeesByChannel(req, res) {
+        try {
+            const {channelId} = req.params;
+            const resEmployees = await Channel.getEmployeesByChannel(channelId);
+            console.log(resEmployees)
+            res.status(200).json(resEmployees);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({message: "Ошибка удаления канала"});
+        }
+    }
 }
 
 module.exports = new ChannelController();

@@ -1,6 +1,6 @@
 const knexConfig = require('../db/knexfile');
 const knex = require('knex')(knexConfig.development);
-const {USER, EMPLOYEE, EMPLOYEE_CHAT} = require("../db/tableDenominations");
+const {USER, EMPLOYEE, EMPLOYEE_CHAT, EMPLOYEE_CHANNEL} = require("../db/tableDenominations");
 const User = require("./User");
 
 class Employee extends User {
@@ -42,6 +42,23 @@ class Employee extends User {
         ).returning('*');
         return resRelation[0];
     }
+
+    static async addEmployeeChannelRelation(employeeId, channelId, role) {
+        const resRelation = await knex(EMPLOYEE_CHANNEL.tableName).insert(
+            {
+                [EMPLOYEE_CHANNEL.columns.EMPLOYEE_ID]: employeeId,
+                [EMPLOYEE_CHANNEL.columns.CHANNEL_ID]: channelId,
+                [EMPLOYEE_CHANNEL.columns.ROLE.columnName]: role,
+            }
+        ).returning('*');
+        return resRelation[0];
+    }
+
+    static async getAll() {
+        const employees = await knex(EMPLOYEE.tableName);
+        return employees;
+    }
+
 }
 
 module.exports = Employee;

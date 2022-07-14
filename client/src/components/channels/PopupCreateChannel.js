@@ -6,13 +6,13 @@ import axios from "axios";
 import {channelsByEmployeeRoute, createChannelRoute} from "../../utils/apiRotes";
 import {createChannel} from "../../utils/requests";
 
-const PopupCreateChannel = ({setPopupActive, employeeId, reload, setReload}) => {
+const PopupCreateChannel = ({setPopupActive, curEmployeeId, reload, setReload}) => {
     const [domain, setDomain] = useState("");
     const [channelScript, setChannelScript] = useState(false);
 
     async function buttonCreateChannelHandler() {
         const body = {
-            employeeId: employeeId,
+            employeeId: curEmployeeId,
             domain: domain
         }
         const res = await createChannel(body);

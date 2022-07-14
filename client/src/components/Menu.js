@@ -5,7 +5,7 @@ import {modes} from "../utils/panelModes";
 const Menu = ({mode, setMode}) => {
     return (
         <div
-            className="p-4 d-flex flex-column justify-content-start"
+            className="d-flex flex-column justify-content-start"
             style={{
                 background: "#2B2E34",
                 minHeight: "100vh",
@@ -13,7 +13,7 @@ const Menu = ({mode, setMode}) => {
             }}
         >
             <div
-                className="d-flex flex-column justify-content-center"
+                className="p-4 d-flex flex-column justify-content-center"
                 style={{
                     height: "100vh"
                 }}

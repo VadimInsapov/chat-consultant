@@ -1,5 +1,5 @@
 import axios from "axios";
-import {channelsByEmployeeRoute, createChannelRoute} from "./apiRotes";
+import {addEmployeeToChannelRoute, channelsByEmployeeRoute, createChannelRoute, employeeRoute} from "./apiRotes";
 import {getToken} from "../components/AppRouter";
 
 export async function createChannel(body) {
@@ -13,6 +13,24 @@ export async function getChannelsByEmployee(employeeId) {
     const fullRoute = channelsByEmployeeRoute + employeeId;
     const res =
         await axios.get(fullRoute,
+            {headers: {"Authorization": `Bearer ${getToken()}`}})
+    return res.data;
+}
+
+export async function getAllEmployees() {
+    const fullRoute = employeeRoute;
+    const res =
+        await axios.get(fullRoute,
+            {headers: {"Authorization": `Bearer ${getToken()}`}})
+    return res.data;
+}
+
+export async function addEmployeeToChannel(employeeId, channelId, role) {
+    const body = {
+        employeeId, channelId, role
+    }
+    const res =
+        await axios.put(addEmployeeToChannelRoute, body,
             {headers: {"Authorization": `Bearer ${getToken()}`}})
     return res.data;
 }

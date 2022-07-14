@@ -6,15 +6,22 @@ import PopupCreateChannel from "./PopupCreateChannel";
 import PopupAddEmployeeToChannel from "./PopupAddEmployeeToChannel";
 import axios from "axios";
 import {channelsByEmployeeRoute, loginRoute} from "../../utils/apiRotes";
-import {getChannelsByEmployee} from "../../utils/requests";
+import {getAllEmployees, getChannelsByEmployee} from "../../utils/requests";
 
 
-const Channels = ({employee}) => {
+const Channels = ({curEmployee}) => {
     const [reload, setReload] = useState(false);
     const [channels, setChannels] = useState([]);
     const [popupActive, setPopupActive] = useState(false);
+    const [allEmployees, setAllEmployees] = useState([]);
     useEffect(() => {
-        getChannelsByEmployee(employee.id)
+        getAllEmployees()
+            .then((res) => {
+                setAllEmployees(res);
+            });
+    }, [])
+    useEffect(() => {
+        getChannelsByEmployee(curEmployee.id)
             .then((res) => {
                     const channelsArray = Object.entries(res);
                     if (JSON.stringify(channels) !== JSON.stringify(channelsArray)) {
@@ -24,10 +31,11 @@ const Channels = ({employee}) => {
             );
     }, [channels, reload]);
 
+
     return (
         <>
             <Popup active={popupActive} setActive={setPopupActive}>
-                <PopupCreateChannel setPopupActive={setPopupActive} employeeId={employee.id} reload={reload} setReload={setReload}/>
+                <PopupCreateChannel setPopupActive={setPopupActive} curEmployeeId={curEmployee.id} reload={reload} setReload={setReload}/>
             </Popup>
             <div className="d-flex align-items-center justify-content-between mb-2">
                 <div className="fs-1">Подключенные каналы</div>
@@ -41,7 +49,7 @@ const Channels = ({employee}) => {
                 </div>
             </div>
             {
-                channels.map((channel, index) => <Channel key={index} employee={employee} channel={channel}/>)
+                channels.map((channel, index) => <Channel key={index} allEmployees={allEmployees} curEmployee={curEmployee} channel={channel} reload={reload} setReload={setReload}/>)
             }
         </>
     );

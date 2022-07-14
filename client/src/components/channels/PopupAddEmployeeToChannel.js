@@ -1,41 +1,56 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../../utils/consts";
+import {addEmployeeToChannel, getAllEmployees} from "../../utils/requests";
+import {forEach} from "react-bootstrap/ElementChildren";
 
-const PopupAddEmployeeToChannel = ({setPopupActive}) => {
-    const [userId, setUserId] = useState("");
+const PopupAddEmployeeToChannel = ({reload, setReload, setPopupActive, channelId, allEmployees, employeesInChannel: channelEmployees}) => {
+    const [accessibleEmployees, setAccessibleEmployees] = useState([]);
+    const [employeeId, setEmployeeId] = useState("");
     const [role, setRole] = useState("");
 
+    // const indexesAllEmployees = allEmployees.map((employee) => employee.id)
+    const indexesChannelEmployees = channelEmployees.map((employee) => employee.employee_id)
+    const filteredArray = allEmployees.filter((employee) => !indexesChannelEmployees.includes(employee.id))
+    if (JSON.stringify(accessibleEmployees) !== JSON.stringify(filteredArray)) {
+        setAccessibleEmployees(filteredArray);
+    }
+
     function selectUser(e) {
-        setUserId(e.target.value);
+        setEmployeeId(e.target.value);
     }
 
     function selectRole(e) {
         setRole(e.target.value);
     }
 
-    function buttonHandler() {
-        if (!userId || !role) {
+    async function buttonHandler() {
+        if (!employeeId || !role) {
             //ошибка не введён пользователь
             return;
         }
-        setUserId("");
+        await addEmployeeToChannel(employeeId, channelId, role);
+        setEmployeeId("");
         setRole("");
         setPopupActive(false);
+        setReload(!reload);
     }
 
     return (
         <Form>
             <div className="text-center mb-2 fs-3">Добавить сотрудника</div>
             <Form.Select
-                value={userId}
+                value={employeeId}
                 onChange={selectUser}
             >
                 <option value="">Выбрать сотрудника</option>
-                <option value="1">Инсапов</option>
-                <option value="2">Иванов</option>
-                <option value="3">Дмитриев</option>
+                {accessibleEmployees.map((employee) =>
+                    <option key={employee.id} value={employee.id}>
+                        {employee.name} {employee.last_name}
+                    </option>
+
+                )}
             </Form.Select>
             <Form.Select
                 value={role}

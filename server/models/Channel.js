@@ -55,7 +55,14 @@ class Channel {
         }, {})
         return groupedChannelsAndAllEmployees;
     }
-
+    static async getEmployeesByChannel(channelId) {
+        const employeesByChannel = await knex
+            .select("*")
+            .from(EMPLOYEE_CHANNEL.tableName)
+            .where({[EMPLOYEE_CHANNEL.columns.CHANNEL_ID]: channelId})
+        ;
+        return employeesByChannel;
+    }
     async save() {
         const resChannel = await knex(CHANNEL.tableName).insert(
             {
