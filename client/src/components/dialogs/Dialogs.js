@@ -7,7 +7,7 @@ import Chats from "./Chats";
 import {dialogModes} from "../../utils/dialogModes";
 
 
-const Dialogs = () => {
+const Dialogs = ({curEmployee}) => {
     const [dialogMode, setDialogMode] = useState(dialogModes.INCOMING)
     return (
         <>
@@ -31,7 +31,7 @@ const Dialogs = () => {
                     >Все</Button>
                 </div>
             </div>
-            <Chats dialogMode={dialogMode}/>
+            <Chats dialogMode={dialogMode} curEmployee={curEmployee}/>
         </>
     );
 };

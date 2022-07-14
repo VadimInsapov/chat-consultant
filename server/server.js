@@ -10,6 +10,7 @@ const socket = require("socket.io");
 const authMiddleware = require('./middlewares/authMiddleware');
 
 const messageController = require("./controllers/messageController");
+const employeeModel = require("./models/Employee");
 
 async function a() {
     const s = await messageController.index(15);
@@ -59,6 +60,11 @@ io.on('connection', (socket) => {
     socket.on('getMessages', async (msg) => {
         const allMessageByChat = await messageController.index(msg.chatId);
         socket.emit(msg.chatId, allMessageByChat);
+    });
+    socket.on('getIncomingMessages', async (msg) => {
+        const allIncomingMessages = await employeeModel.getAllIncomingMessages(msg.employeeId);
+        console.log(allIncomingMessages)
+        socket.emit('incoming', allIncomingMessages);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');

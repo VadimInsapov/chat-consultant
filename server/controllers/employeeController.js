@@ -87,6 +87,8 @@ class EmployeeController {
             res.status(400).json({message: "Ошибка добавления сотрудника в канал!"});
         }
     }
+
+
 }
 
 function genereateAccessToken(employeeJsonFromDB) {

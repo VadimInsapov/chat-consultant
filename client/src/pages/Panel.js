@@ -31,7 +31,7 @@ const Panel = ({token}) => {
                                  width: "85%",
                                  background: "#F2F2EF"
                              }}>
-                            <Dialogs/>
+                            <Dialogs curEmployee={curEmployee}/>
                         </div>}
 
                 </div>

@@ -42,7 +42,6 @@ module.exports = {
         columns: {
             ID: "id",
             CHANNEL_ID: "channel_id",
-            EMPLOYEE_ID: "employee_id",
         }
     },
     QUEST: {

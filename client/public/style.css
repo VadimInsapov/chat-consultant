@@ -7,6 +7,10 @@
     cursor: pointer;
     background-color: #ccc !important;
 }
+.quest:hover {
+    cursor: pointer;
+    background-color: #ccc !important;
+}
 
 .menu-button.chosen {
     background-color: #ccf !important;
