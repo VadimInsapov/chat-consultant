@@ -10,10 +10,12 @@ const socket = require("socket.io");
 const authMiddleware = require('./middlewares/authMiddleware');
 
 const messageController = require("./controllers/messageController");
-async function a (){
-    const s= await messageController.index(15);
+
+async function a() {
+    const s = await messageController.index(15);
     console.log(s);
 }
+
 // a();
 // messageController.create("Привет", {
 //     name: "Олег",
@@ -39,7 +41,12 @@ const io = socket(server, {
     },
 });
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    socket.on('message', async (msg) => {
+        const body = msg.body;
+        delete msg.body;
+        const messageInfo = await messageController.create(body, msg);
+        console.log(messageInfo)
+    });
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });

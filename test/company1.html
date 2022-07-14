@@ -3,122 +3,6 @@
 <head>
     <title>О сайте</title>
     <meta charset="utf-8"/>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-
-        * {
-            font-size: 14px;
-            box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        .block2 {
-            position: fixed;
-            top: 37%;
-            left: 66%;
-            bottom: 2%;
-            right: 1%;
-            z-index: 99999;
-            display: flex;
-            justify-content: flex-end;
-            flex-direction: column;
-        }
-
-        .modal2 {
-            padding: 7px 9px 7px 9px;
-            display: none;
-            background: rgb(43, 46, 52);
-            border: solid black;
-            border-radius: 3%;
-        }
-
-        .modal_vis {
-            display: block;
-        }
-
-        .body_block {
-            overflow: hidden;
-            margin-right: 17px;
-        }
-
-        #close_modal {
-            color: rgb(242, 242, 239);
-            font-size: 26px;
-            font-weight: bold;
-            font-family: Times, sans-serif;
-            border-radius: 50%;
-            border: 4px solid white;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            margin: 10px;
-            cursor: pointer;
-            position: absolute;
-            right: 0;
-            transform: rotate(45deg);
-            transition: all 0.6s;
-            box-sizing: content-box;
-        }
-
-        #close_modal:hover {
-            color: #FFF;
-            transform: rotate(135deg);
-        }
-
-        .modal_messages {
-            border-radius: 3%;
-            background: rgb(242, 242, 239);
-            height: 280px;
-            margin-top: 60px;
-        }
-
-        .modal_new-message {
-            border-radius: 3%;
-            background: rgb(242, 242, 239);
-            height: 80px;
-            margin-top: 20px;
-            padding: 11px;
-            width: 100%;
-        }
-
-        .button-chat {
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            border-radius: 3%;
-            border: none;
-            margin: 10px 0px 0px 0px;
-        }
-
-        .open_modal {
-            margin-top: 10px;
-            text-decoration: none;
-            text-align: center;
-            background: rgb(43, 46, 52);
-            color: rgb(242, 242, 239);;
-            border: solid black;
-            border-radius: 3px;
-            font-size: 18px;
-        }
-
-        .modal_messages::-webkit-scrollbar {
-            display: none;
-        }
-
-
-        .author {
-            background: #AE9ABE;
-        }
-
-        .message.my {
-            align-items: end;
-        }
-
-        .time {
-            color: #AE9ABE;
-        }
-    </style>
 </head>
 <body>
 <h1>Сайт компании 1</h1>
@@ -131,6 +15,7 @@
                 <input type="text" name="name" id="name" placeholder="Введите имя..." class="form-control">
                 <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Введите фамилию..."/>
                 <input type="text" name="city" id="city" class="form-control" placeholder="Введите город..."/>
+                <input type="text" name="body" id="body" class="form-control" placeholder="Введите сообщение..."/>
             </form>
             <div id="messages" class="h-100 p-2">
                 <div class="message d-flex flex-column mb-3">
@@ -151,7 +36,6 @@
     <button class="open_modal p-2 rounded">Открыть консультант</button>
 </div>
 
-
-<script src="http://localhost:5000/channel.js?channelId=20" async></script>
+<script src="http://localhost:5000/channel.js?channelId=25" async></script>
 </body>
 <html>

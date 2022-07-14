@@ -19,9 +19,9 @@ class MessageController {
 
     async create(body, questInfo) {
         try {
-            let {userId = "", chatId = "", name, lastName, city} = questInfo;
+            let {userId = "", chatId = "", channelId = "", name, lastName, city} = questInfo;
             if (!userId) {
-                const chat = new Chat(2);
+                const chat = new Chat(channelId);
                 const chatJsonFromDB = await chat.save();
                 chatId = chatJsonFromDB[CHAT.columns.ID];
                 const quest = new Quest(name, lastName, city, chatId);
