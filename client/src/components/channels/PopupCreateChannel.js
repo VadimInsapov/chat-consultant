@@ -6,7 +6,7 @@ import axios from "axios";
 import {channelsByEmployeeRoute, createChannelRoute} from "../../utils/apiRotes";
 import {createChannel} from "../../utils/requests";
 
-const PopupCreateChannel = ({setPopupActive, employeeId}) => {
+const PopupCreateChannel = ({setPopupActive, employeeId, reload, setReload}) => {
     const [domain, setDomain] = useState("");
     const [channelScript, setChannelScript] = useState(false);
 
@@ -24,6 +24,7 @@ const PopupCreateChannel = ({setPopupActive, employeeId}) => {
     async function buttonOkHandler() {
         setPopupActive(false);
         setChannelScript(false);
+        setReload(!reload);
     }
 
     const handleChange = (event) => {

@@ -40,7 +40,7 @@ class Employee extends User {
                 [EMPLOYEE_CHAT.columns.CHAT_ID]: chatId,
             }
         ).returning('*');
-        return resRelation;
+        return resRelation[0];
     }
 }
 

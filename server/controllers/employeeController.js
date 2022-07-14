@@ -49,7 +49,8 @@ class EmployeeController {
 
     async addToTheChat(req, res) {
         try {
-            const {employeeId, chatId} = req.params;
+            const {employeeId, chatId} = req.body;
+            console.log(req.body)
             const relationJsonFromDB = await Employee.addEmployeeChatRelation(employeeId, chatId);
             res.status(300).json(relationJsonFromDB);
         } catch (e) {

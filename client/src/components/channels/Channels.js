@@ -10,6 +10,7 @@ import {getChannelsByEmployee} from "../../utils/requests";
 
 
 const Channels = ({employee}) => {
+    const [reload, setReload] = useState(false);
     const [channels, setChannels] = useState([]);
     const [popupActive, setPopupActive] = useState(false);
     useEffect(() => {
@@ -21,12 +22,12 @@ const Channels = ({employee}) => {
                     }
                 }
             );
-    }, [channels]);
-console.log(employee)
+    }, [channels, reload]);
+
     return (
         <>
             <Popup active={popupActive} setActive={setPopupActive}>
-                <PopupCreateChannel setPopupActive={setPopupActive} employeeId={employee.id}/>
+                <PopupCreateChannel setPopupActive={setPopupActive} employeeId={employee.id} reload={reload} setReload={setReload}/>
             </Popup>
             <div className="d-flex align-items-center justify-content-between mb-2">
                 <div className="fs-1">Подключенные каналы</div>
