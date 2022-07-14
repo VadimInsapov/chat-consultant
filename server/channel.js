@@ -25,11 +25,12 @@ function createMessageBlock(author, body, time, isMy) {
     messageDiv.classList.add("message", "d-flex", "flex-column", "mb-3");
     const authorDiv = document.createElement("div");
     const author2Div = document.createElement("div");
-    author2Div.classList.add("author", "d-inline", "p-1", "rounded");
+    author2Div.classList.add("author", "d-inline", "ps-2", "pe-2", "rounded");
     author2Div.innerText = author;
     const bodyDiv = document.createElement("div");
-    bodyDiv.classList.add("body", "fs-6", "border", "border-dark", "p-1", "rounded", "mt-2");
-    bodyDiv.innerText = body;
+    const bodyDiv2 = document.createElement("div");
+    bodyDiv2.classList.add("body", "fs-6", "border", "border-dark", "p-1", "rounded", "mt-1", "d-inline-block", "mw-100", "text-break");
+    bodyDiv2.innerText = body;
     const timeDiv = document.createElement("div");
     timeDiv.classList.add("time", "fw-bold");
     timeDiv.innerText = time;
@@ -37,6 +38,8 @@ function createMessageBlock(author, body, time, isMy) {
     messageDiv.appendChild(authorDiv);
     authorDiv.appendChild(author2Div);
     messageDiv.appendChild(bodyDiv);
+    bodyDiv.appendChild(bodyDiv2);
+
     messageDiv.appendChild(timeDiv);
     return messageDiv;
 }
@@ -46,8 +49,30 @@ async function doThis(channelId) {
     await loadCss("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
     await loadScript("http://localhost:5000/socket.io/socket.io.js");
     const socket = io('http://localhost:5000');
-    socket.on("message", function (msg) {
-        console.log(msg);
+
+    function getMessagesHandlerByChat(cameMessages) {
+        cameMessages.map(cameMessage => {
+            const author = `${cameMessage.name} ${cameMessage.last_name}`
+            const body = cameMessage.body;
+            const date = new Date(cameMessage.created_at);
+            const time = date.toLocaleString().split(" ")[1];
+
+            const questInfo = sessionStorage.getItem("questInfo");
+            const {userId} = JSON.parse(questInfo);
+            console.log(cameMessage)
+            const isMyMessage = userId == cameMessage.user_id;
+            const messageBlock = createMessageBlock(author, body, time, isMyMessage);
+            messages.appendChild(messageBlock)
+            modal_messages.scrollTop = 9999;
+
+        })
+    }
+
+    socket.on("greet", function (msg) {
+        const userId = msg.user_id;
+        const chatId = msg.chat_id;
+        sessionStorage.setItem("questInfo", JSON.stringify({userId, chatId}));
+        socket.on(chatId, getMessagesHandlerByChat);
     });
 
 
@@ -65,6 +90,7 @@ async function doThis(channelId) {
         open_modal[i].onclick = function () { // клик на открытие
             modal.classList.add('modal_vis'); // добавляем видимость окна
             modal.classList.remove('bounceOutDown'); // удаляем эффект закрытия
+            modal_messages.scrollTop = 9999;
         };
     }
     close_modal.onclick = function () { // клик на закрытие
@@ -72,12 +98,16 @@ async function doThis(channelId) {
         modal.classList.remove('modal_vis');
         body.classList.remove('body_block'); // возвращаем прокрутку
     };
-    let questExists = false;
+    let questExists = sessionStorage.getItem("questInfo");
     if (!questExists) {
         modal_messages.appendChild(greet);
         modal_new_message.parentNode.removeChild(modal_new_message);
         messages.parentNode.removeChild(messages);
     } else {
+        const questInfo = sessionStorage.getItem("questInfo");
+        const {userId, chatId} = JSON.parse(questInfo);
+        socket.on(chatId, getMessagesHandlerByChat);
+        socket.emit('getMessages', {chatId});
         modal_messages.removeChild(greet);
         modal.insertBefore(modal_new_message, buttonChat);
         modal_messages.appendChild(messages);
@@ -89,27 +119,19 @@ async function doThis(channelId) {
             let city = document.getElementById('city').value;
             let body = document.getElementById('body').value;
             if (!(name && lastName && city)) return;
-            socket.emit('message', {name, lastName, city, body, channelId});
-            //отравка данных
+            socket.emit('greet', {name, lastName, city, body, channelId});
             questExists = true;
             modal_messages.removeChild(greet);
             modal.insertBefore(modal_new_message, buttonChat);
             modal_messages.appendChild(messages);
         } else {
-            //получение и отображение сообщений
-            console.log(messages.scrollHeight)
-            modal_messages.scrollTop = 9999;
-            console.log(messages.scrollTop)
-
-            const messageBlock = createMessageBlock("Вадим Инсапов", "Это я", "23.06.2000", true);
-            messages.appendChild(messageBlock)
-            console.log(messages)
-
-
-            const message = modal_new_message.value;
+            const body = modal_new_message.value;
+            if (!body) return;
             modal_new_message.value = "";
-            //отправка
-            console.log(message)
+            const questInfo = sessionStorage.getItem("questInfo");
+            const {userId, chatId} = JSON.parse(questInfo);
+            socket.emit('message', {userId, chatId, body});
+
         }
 
     }

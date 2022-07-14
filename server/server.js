@@ -41,11 +41,24 @@ const io = socket(server, {
     },
 });
 io.on('connection', (socket) => {
-    socket.on('message', async (msg) => {
+    socket.on('greet', async (msg) => {
         const body = msg.body;
         delete msg.body;
         const messageInfo = await messageController.create(body, msg);
         console.log(messageInfo)
+        socket.emit('greet', messageInfo);
+        // socket.emit('incoming', messageInfo);
+    });
+    socket.on('message', async (msg) => {
+        const body = msg.body;
+        delete msg.body;
+        const messageInfo = await messageController.create(body, msg);
+        const allMessageByChat = await messageController.index(msg.chatId);
+        socket.emit(msg.chatId, allMessageByChat);
+    });
+    socket.on('getMessages', async (msg) => {
+        const allMessageByChat = await messageController.index(msg.chatId);
+        socket.emit(msg.chatId, allMessageByChat);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');

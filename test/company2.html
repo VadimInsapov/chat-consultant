@@ -6,6 +6,35 @@
 </head>
 <body>
 <h1>Сайт компании 2</h1>
+<div class="block2" id="block2">
+    <div id="modal2" class="modal2 bounceIn">
+        <div id="close_modal">+</div>
+        <div id="modal_messages" class="modal_messages overflow-scroll">
+            <form id="greet" class="h-100 d-flex flex-column  justify-content-center align-items-center gap-2 p-3">
+                <h3>Знакомство</h3>
+                <input type="text" name="name" id="name" placeholder="Введите имя..." class="form-control">
+                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Введите фамилию..."/>
+                <input type="text" name="city" id="city" class="form-control" placeholder="Введите город..."/>
+                <input type="text" name="body" id="body" class="form-control" placeholder="Введите сообщение..."/>
+            </form>
+            <div id="messages" class="h-100 p-2">
+                <div class="message d-flex flex-column mb-3">
+                    <div>
+                        <div class="author d-inline p-1 rounded">Инсапов Вадим</div>
+                    </div>
+                    <div class="body fs-6 border border-dark p-1 rounded mt-2">Lorem Lorem Lorem Lorem Lorem Lorem
+                        Lorem
+                        Lorem
+                    </div>
+                    <div class="time fw-bold">23.06.2000</div>
+                </div>
+            </div>
+        </div>
+        <textarea id="modal_new-message" class="modal_new-message"></textarea>
+        <button id="button-chat" type="button" class="btn btn-success button-chat">Отправить</button>
+    </div>
+    <button class="open_modal p-2 rounded">Открыть консультант</button>
+</div>
 <script src="http://localhost:5000/channel.js?channelId=19" async></script>
 </body>
 <html>
