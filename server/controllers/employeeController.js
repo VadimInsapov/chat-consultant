@@ -37,6 +37,7 @@ class EmployeeController {
             }
             delete employeeJsonFromDB.password;
             const user = await Employee.getUserByID(employeeJsonFromDB[EMPLOYEE.columns.USER_ID]);
+            delete user.id;
             employeeJsonFromDB = {...employeeJsonFromDB, ...user};
             const token = genereateAccessToken(employeeJsonFromDB);
             res.status(200).json({token: token});

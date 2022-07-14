@@ -22,7 +22,7 @@ const Channels = ({employee}) => {
                 }
             );
     }, [channels]);
-
+console.log(employee)
     return (
         <>
             <Popup active={popupActive} setActive={setPopupActive}>
