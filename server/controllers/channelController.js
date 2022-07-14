@@ -24,7 +24,7 @@ class ChannelController {
             }
             const channel = new Channel(domain, employeeId);
             const channelJsonFromDB = await channel.save();
-            const channelScript = '<script src="' + `http://localhost/channel?channelId=${channelJsonFromDB.id}"` + ' async></script>';
+            const channelScript = '<script src="' + `http://localhost:${process.env.PORT}/channel.js?channelId=${channelJsonFromDB.id}"` + ' async></script>';
             res.status(200).json(
                 {
                     channelJsonFromDB, channelScript
