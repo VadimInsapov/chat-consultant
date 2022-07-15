@@ -47,7 +47,11 @@ const Chats = ({dialogMode, curEmployee}) => {
                     )
                 }
             </div>
-            <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket}/>
+            {
+                chosenQuest &&
+                <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket}/>
+            }
+
         </div>
     );
 };
