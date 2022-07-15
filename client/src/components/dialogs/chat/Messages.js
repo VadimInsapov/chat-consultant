@@ -34,7 +34,7 @@ const Messages = ({dialogMode, messages, chatId, curEmployee, socket}) => {
                 }}>
                 {messages &&
                     messages.map((item, index) =>
-                        <Message key={index} isMyMessage={false} author={item.last_name + " " + item.name}
+                        <Message key={index} isMyMessage={curEmployee.user_id===item.user_id} author={item.last_name + " " + item.name}
                                  body={item.body}
                                  time={(new Date(item.created_at)).toLocaleString().split(" ")[1]}/>
                     )

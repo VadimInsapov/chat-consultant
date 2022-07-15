@@ -25,11 +25,11 @@ const Dialogs = ({curEmployee}) => {
                             size="lg"
                             onClick={() => setDialogMode(dialogModes.MY)}
                     >Мои</Button>
-                    <Button className={dialogMode === dialogModes.ALL ? "bg-warning text-black" : ""}
-                            variant="outline-warning"
-                            size="lg"
-                            onClick={() => setDialogMode(dialogModes.ALL)}
-                    >Все</Button>
+                    {/*<Button className={dialogMode === dialogModes.ALL ? "bg-warning text-black" : ""}*/}
+                    {/*        variant="outline-warning"*/}
+                    {/*        size="lg"*/}
+                    {/*        onClick={() => setDialogMode(dialogModes.ALL)}*/}
+                    {/*>Все</Button>*/}
                 </div>
             </div>
             {

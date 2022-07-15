@@ -16,6 +16,7 @@ const QuestsIncoming = ({dialogMode, curEmployee, setDialogMode}) => {
     useEffect(() => {
         socket.current = io(SERVER_URL);
         socket.current.on('greetUser', (incomingQuestsSocket) => {
+            console.log("Я тут")
             socket.current.emit("getIncomingQuests", {employeeId});
         })
         socket.current.on('incoming', (incomingQuestsSocket) => {
@@ -31,6 +32,9 @@ const QuestsIncoming = ({dialogMode, curEmployee, setDialogMode}) => {
                 setIncomingQuests(res);
                 setChosenQuest(res[0]);
             });
+        return () => {
+            socket.current.disconnect();
+        }
     }, []);
     return (
         <div className="d-flex border border-5 border-dark rounded justify-content-between"
@@ -52,7 +56,8 @@ const QuestsIncoming = ({dialogMode, curEmployee, setDialogMode}) => {
             </div>
             {
                 chosenQuest &&
-                <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket} curEmployee={curEmployee}/>
+                <Chat dialogMode={dialogMode} chosenQuest={chosenQuest} chatId={chosenQuest.chat_id} socket={socket}
+                      curEmployee={curEmployee}/>
             }
         </div>
     );

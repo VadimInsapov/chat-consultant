@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
         io.sockets.emit('greetUser',{});
     });
     socket.on('message', async (msg) => {
+        console.log(msg);
         const body = msg.body;
         delete msg.body;
         const messageInfo = await messageController.create(body, msg);

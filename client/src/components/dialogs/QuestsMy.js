@@ -15,11 +15,10 @@ const QuestsMy = ({dialogMode, curEmployee}) => {
 
     useEffect(() => {
         socket.current = io(SERVER_URL);
-        socket.current.emit("getMyQuests", {employeeId});
         socket.current.on('incomingMyQuests', (myQuestsSocket) => {
-            console.log(myQuestsSocket);
             setMyQuests(myQuestsSocket);
         })
+        socket.current.emit("getMyQuests", {employeeId});
     }, []);
     return (
         <div className="d-flex border border-5 border-dark rounded justify-content-between"
@@ -41,7 +40,8 @@ const QuestsMy = ({dialogMode, curEmployee}) => {
             </div>
             {
                 chosenQuest &&
-                <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket} curEmployee={curEmployee}/>
+                <Chat dialogMode={dialogMode} chosenQuest={chosenQuest} chatId={chosenQuest.chat_id} socket={socket}
+                      curEmployee={curEmployee}/>
             }
         </div>
     );

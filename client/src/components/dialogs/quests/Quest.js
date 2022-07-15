@@ -3,6 +3,9 @@ import Chat from "../chat/Chat";
 
 const Quest = ({thisQuest, chosenQuest, idQuest, setChosenQuest, dialogMode}) => {
     const isDarkMode = idQuest === chosenQuest.user_id;
+    function questHandler(){
+
+    }
     return (
         <>
             <div className={"quest d-flex align-items-center border border-3 border-dark p-3 rounded text-dark"}
