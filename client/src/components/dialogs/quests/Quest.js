@@ -1,25 +1,24 @@
 import React from 'react';
+import Chat from "../chat/Chat";
 
-const Quest = ({userId, name, lastName, chosenQuest}) => {
-    console.log(chosenQuest.user_id)
-    console.log(userId)
-    const aa = chosenQuest.user_id !== userId;
-    let myStyle = {};
-    if (aa) {
-        myStyle = {
-            background: "#F2F2EF"
-        }
-    } else {
-        myStyle = {
-            background: "#ccc",
-        }
-    }
+const Quest = ({thisQuest, chosenQuest, idQuest, setChosenQuest, dialogMode}) => {
+    const isDarkMode = idQuest === chosenQuest.user_id;
     return (
-        <div className={"quest d-flex align-items-center border border-3 border-dark p-3 rounded text-dark"}
-             style={myStyle}
-        >
-            <div className="fs-6">{lastName} {name}</div>
-        </div>
+        <>
+            <div className={"quest d-flex align-items-center border border-3 border-dark p-3 rounded text-dark"}
+                 style={
+                     isDarkMode ? {
+                         background: "#ccc"
+                     } : {
+                         background: "#F2F2EF"
+                     }}
+                 onClick={()=> setChosenQuest(thisQuest)}
+            >
+                <div className="fs-6">{thisQuest.lastName} {thisQuest.name}</div>
+            </div>
+
+        </>
+
     );
 };
 

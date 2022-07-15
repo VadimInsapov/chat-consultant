@@ -8,5 +8,7 @@ router.post('/auth/login', controller.login);
 router.put('/chat', authMiddleware, controller.addToTheChat);
 router.put('/channel', authMiddleware,  controller.addToTheChannel);
 router.get('/', controller.index);
+router.get('/:employeeId/incoming-messages', controller.getIncomingMessages);
+
 
 module.exports = router;

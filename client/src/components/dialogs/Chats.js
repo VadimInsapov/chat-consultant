@@ -4,33 +4,47 @@ import Chat from "./chat/Chat";
 import {useEffect, useRef, useState} from "react";
 import io from "socket.io-client";
 import {SERVER_URL} from "../../utils/consts";
+import {getIncomingMessages} from "../../utils/requests";
+import Quest from "./quests/Quest";
 
 const Chats = ({dialogMode, curEmployee}) => {
     const employeeId = curEmployee.id;
     const [chosenQuest, setChosenQuest] = useState({});
-    const [incomingMessages, setIncomingMessages] = useState([]);
-    const socketRef = useRef(null)
-    useEffect(() => {
-        socketRef.current = io(SERVER_URL);
-        socketRef.current.emit('getIncomingMessages', {employeeId})
-        socketRef.current.on('incoming', (incomingMessages) => {
-            setIncomingMessages(incomingMessages);
-            setChosenQuest(incomingMessages[0].quest);
-        })
-    }, []);
+    const [incomingQuests, setIncomingQuests] = useState([]);
+    const socket = useRef(null);
 
+    useEffect(() => {
+        socket.current = io(SERVER_URL);
+        socket.current.on('incoming', (incomingQuestsSocket) => {
+            setIncomingQuests(incomingQuestsSocket);
+            setChosenQuest(incomingQuestsSocket[0]);
+        })
+        getIncomingMessages(employeeId)
+            .then((res) => {
+                console.log(res)
+                setIncomingQuests(res);
+                setChosenQuest(res[0]);
+            });
+    }, []);
     return (
         <div className="d-flex border border-5 border-dark rounded justify-content-between"
              style={{
                  height: "76vh",
              }}>
-            {incomingMessages &&
-                <>
-                    <Quests chosenQuest={chosenQuest} dialogMode={dialogMode} curEmployee={curEmployee} incomingMessages={incomingMessages}/>
-                    <Chat dialogMode={dialogMode} incomingMessages={incomingMessages}/>
-                </>
-            }
-
+            <div className="quests h-100 d-flex flex-column gap-2 w-25 overflow-scroll p-3"
+                 style={{
+                     background: "#2B2E34"
+                 }}
+            >
+                {incomingQuests.length !== 0 &&
+                    incomingQuests.map((item, index) =>
+                        <Quest dialogMode={dialogMode} key={index} setChosenQuest={setChosenQuest}
+                               chosenQuest={chosenQuest} idQuest={item.user_id} thisQuest={item}
+                        />
+                    )
+                }
+            </div>
+            <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket}/>
         </div>
     );
 };

@@ -16,7 +16,6 @@ async function a() {
     const s = await messageController.index(15);
     console.log(s);
 }
-
 // a();
 // messageController.create("Привет", {
 //     name: "Олег",
@@ -48,23 +47,24 @@ io.on('connection', (socket) => {
         const messageInfo = await messageController.create(body, msg);
         console.log(messageInfo)
         socket.emit('greet', messageInfo);
-        // socket.emit('incoming', messageInfo);
+        const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
+        io.sockets.emit('incoming', allIncomingQuests);
     });
     socket.on('message', async (msg) => {
         const body = msg.body;
         delete msg.body;
         const messageInfo = await messageController.create(body, msg);
         const allMessageByChat = await messageController.index(msg.chatId);
-        socket.emit(msg.chatId, allMessageByChat);
+        io.sockets.emit(msg.chatId, allMessageByChat);
     });
     socket.on('getMessages', async (msg) => {
+        console.log(msg.chatId);
         const allMessageByChat = await messageController.index(msg.chatId);
-        socket.emit(msg.chatId, allMessageByChat);
+        io.sockets.emit(msg.chatId, allMessageByChat);
     });
-    socket.on('getIncomingMessages', async (msg) => {
-        const allIncomingMessages = await employeeModel.getAllIncomingMessages(msg.employeeId);
-        console.log(allIncomingMessages)
-        socket.emit('incoming', allIncomingMessages);
+    socket.on('getIncomingQuests', async (msg) => {
+        const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
+        io.sockets.emit('incoming', allIncomingQuests);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');

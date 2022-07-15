@@ -88,6 +88,16 @@ class EmployeeController {
         }
     }
 
+    async getIncomingMessages(req, res) {
+        try {
+            let messagesJsonFromDB = await Employee.getIncomingQuests(req.params.employeeId);
+            res.status(200).json(messagesJsonFromDB);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({message: "Ошибка получения входящих сообщений!"});
+        }
+    }
+
 
 }
 

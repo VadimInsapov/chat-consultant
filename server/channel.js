@@ -51,6 +51,7 @@ async function doThis(channelId) {
     const socket = io('http://localhost:5000');
 
     function getMessagesHandlerByChat(cameMessages) {
+        messages.innerHTML ='';
         cameMessages.map(cameMessage => {
             const author = `${cameMessage.name} ${cameMessage.last_name}`
             const body = cameMessage.body;
@@ -130,6 +131,7 @@ async function doThis(channelId) {
             modal_new_message.value = "";
             const questInfo = sessionStorage.getItem("questInfo");
             const {userId, chatId} = JSON.parse(questInfo);
+            console.log(chatId);
             socket.emit('message', {userId, chatId, body});
 
         }
