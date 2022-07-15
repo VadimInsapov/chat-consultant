@@ -170,6 +170,16 @@ class Employee extends User {
 
         return employeeChannelsChatsQuests;
     }
+    static async getMyQuests(employeeId) {
+        const employeeChats = await knex
+            .select('*')
+            .from(EMPLOYEE_CHAT.tableName)
+            .join(QUEST.tableName, `${QUEST.tableName}.${QUEST.columns.CHAT_ID}`, '=', `${EMPLOYEE_CHAT.tableName}.${EMPLOYEE_CHAT.columns.CHAT_ID}`)
+            .join(USER.tableName, `${USER.tableName}.${USER.columns.ID}`, '=', `${QUEST.tableName}.${QUEST.columns.USER_ID}`)
+            .where({[EMPLOYEE_CHAT.columns.EMPLOYEE_ID]: employeeId})
+
+        return employeeChats;
+    }
 
 }
 

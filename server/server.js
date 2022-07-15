@@ -70,6 +70,12 @@ io.on('connection', (socket) => {
         const allIncomingQuests = await employeeModel.getIncomingQuests(employeeId);
         io.sockets.emit('incoming-accept', allIncomingQuests);
     });
+    socket.on('getMyQuests', async ({employeeId}) => {
+        console.log(employeeId)
+        const allMyQuests = await employeeModel.getMyQuests(employeeId);
+        console.log(allMyQuests)
+        io.sockets.emit('incomingMyQuests', allMyQuests);
+    });
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });

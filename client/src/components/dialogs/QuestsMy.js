@@ -1,5 +1,4 @@
 import React from 'react';
-import Quests from "./quests/Quests";
 import Chat from "./chat/Chat";
 import {useEffect, useRef, useState} from "react";
 import io from "socket.io-client";
@@ -8,32 +7,19 @@ import {getIncomingMessages} from "../../utils/requests";
 import Quest from "./quests/Quest";
 import {dialogModes} from "../../utils/dialogModes";
 
-const Chats = ({dialogMode, curEmployee}) => {
+const QuestsMy = ({dialogMode, curEmployee}) => {
     const employeeId = curEmployee.id;
     const [chosenQuest, setChosenQuest] = useState({});
-    const [incomingQuests, setIncomingQuests] = useState([]);
+    const [myQuests, setMyQuests] = useState([]);
     const socket = useRef(null);
 
     useEffect(() => {
         socket.current = io(SERVER_URL);
-        socket.current.on('greetUser', (incomingQuestsSocket) => {
-            socket.current.emit("getIncomingQuests", {employeeId});
+        socket.current.emit("getMyQuests", {employeeId});
+        socket.current.on('incomingMyQuests', (myQuestsSocket) => {
+            console.log(myQuestsSocket);
+            setMyQuests(myQuestsSocket);
         })
-        socket.current.on('incoming', (incomingQuestsSocket) => {
-            console.log(incomingQuestsSocket);
-            setIncomingQuests(incomingQuestsSocket);
-        })
-        // socket.current.on('incoming-accept', (incomingQuestsSocket) => {
-        //     setIncomingQuests(incomingQuestsSocket);
-        //     setChosenQuest(incomingQuestsSocket[0]);
-        //     dialogMode = dialogModes.MY;
-        // })
-        getIncomingMessages(employeeId)
-            .then((res) => {
-                console.log(res)
-                setIncomingQuests(res);
-                setChosenQuest(res[0]);
-            });
     }, []);
     return (
         <div className="d-flex border border-5 border-dark rounded justify-content-between"
@@ -45,8 +31,8 @@ const Chats = ({dialogMode, curEmployee}) => {
                      background: "#2B2E34"
                  }}
             >
-                {incomingQuests.length !== 0 &&
-                    incomingQuests.map((item, index) =>
+                {myQuests.length !== 0 &&
+                    myQuests.map((item, index) =>
                         <Quest dialogMode={dialogMode} key={index} setChosenQuest={setChosenQuest}
                                chosenQuest={chosenQuest} idQuest={item.user_id} thisQuest={item}
                         />
@@ -61,4 +47,4 @@ const Chats = ({dialogMode, curEmployee}) => {
     );
 };
 
-export default Chats;
+export default QuestsMy;

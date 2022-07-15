@@ -3,8 +3,9 @@ import Popup from "../../Popup/Popup";
 import PopupCreateChannel from "../channels/PopupCreateChannel";
 import {Button} from "react-bootstrap";
 import Channel from "../channels/Channel";
-import Chats from "./Chats";
+import QuestsIncoming from "./QuestsIncoming";
 import {dialogModes} from "../../utils/dialogModes";
+import QuestsMy from "./QuestsMy";
 
 
 const Dialogs = ({curEmployee}) => {
@@ -31,7 +32,15 @@ const Dialogs = ({curEmployee}) => {
                     >Все</Button>
                 </div>
             </div>
-            <Chats dialogMode={dialogMode} curEmployee={curEmployee}/>
+            {
+                dialogMode === dialogModes.INCOMING &&
+                <QuestsIncoming dialogMode={dialogMode} curEmployee={curEmployee} setDialogMode={setDialogMode}/>
+            }
+            {
+                dialogMode === dialogModes.MY &&
+                <QuestsMy dialogMode={dialogMode} curEmployee={curEmployee}/>
+            }
+
         </>
     );
 };

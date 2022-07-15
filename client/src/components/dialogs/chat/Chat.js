@@ -9,6 +9,7 @@ import {SERVER_URL} from "../../../utils/consts";
 import {getIncomingMessages} from "../../../utils/requests";
 
 const Chat = ({dialogMode, chatId, socket, curEmployee}) => {
+
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         socket.current = io(SERVER_URL);
@@ -16,13 +17,15 @@ const Chat = ({dialogMode, chatId, socket, curEmployee}) => {
         socket.current.on(chatId, (messagesSocket) => {
             setMessages(messagesSocket);
         })
+        console.log(dialogMode);
+
     }, [chatId]);
     return (
         <>
             <div className="d-flex flex-column justify-content-between w-75"
             >
                 <Messages socket={socket} dialogMode={dialogMode} messages={messages} chatId={chatId} curEmployee={curEmployee}/>
-                {dialogMode !== dialogModes.INCOMING && <NewMessage/>}
+                {dialogMode === dialogModes.MY && <NewMessage/>}
             </div>
         </>
     );

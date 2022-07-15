@@ -5,7 +5,6 @@ import {dialogModes} from "../../../utils/dialogModes";
 
 const Messages = ({dialogMode, messages, chatId, curEmployee, socket}) => {
     const messagesEndRef = useRef(null);
-    console.log(messages)
     useEffect(() => {
         messagesEndRef.scrollTop = messagesEndRef.current.scrollIntoView({behavior: "smooth"});
     }, [messages]);
@@ -17,7 +16,10 @@ const Messages = ({dialogMode, messages, chatId, curEmployee, socket}) => {
 
     return (
         <div
-            className="h-100 ps-4 pe-4 pt-4"
+            className="ps-4 pe-4 pt-4"
+            style={{
+                height: "82%"
+            }}
         >
             {dialogMode === dialogModes.INCOMING &&
                 <Button variant="success"
@@ -25,10 +27,10 @@ const Messages = ({dialogMode, messages, chatId, curEmployee, socket}) => {
                         onClick={acceptQuest}
                 >Принять заявку</Button>}
             <div
-                className="quests d-flex flex-column gap-2 overflow-scroll rounded "
+                className="quests d-flex flex-column gap-2 overflow-scroll rounded"
                 style={{
-                    height: "79%",
-                    background: "#F2F2EF"
+                    background: "#F2F2EF",
+                    height: "95%"
                 }}>
                 {messages &&
                     messages.map((item, index) =>
