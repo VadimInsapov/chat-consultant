@@ -8,7 +8,7 @@ import io from "socket.io-client";
 import {SERVER_URL} from "../../../utils/consts";
 import {getIncomingMessages} from "../../../utils/requests";
 
-const Chat = ({dialogMode, chatId, socket}) => {
+const Chat = ({dialogMode, chatId, socket, curEmployee}) => {
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         socket.current = io(SERVER_URL);
@@ -21,7 +21,7 @@ const Chat = ({dialogMode, chatId, socket}) => {
         <>
             <div className="d-flex flex-column justify-content-between w-75"
             >
-                <Messages dialogMode={dialogMode} messages={messages}/>
+                <Messages socket={socket} dialogMode={dialogMode} messages={messages} chatId={chatId} curEmployee={curEmployee}/>
                 {dialogMode !== dialogModes.INCOMING && <NewMessage/>}
             </div>
         </>

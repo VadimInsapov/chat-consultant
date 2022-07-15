@@ -47,7 +47,6 @@ io.on('connection', (socket) => {
         const messageInfo = await messageController.create(body, msg);
         console.log(messageInfo)
         socket.emit('greet', messageInfo);
-        // const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
         io.sockets.emit('greetUser',{});
     });
     socket.on('message', async (msg) => {
@@ -65,6 +64,11 @@ io.on('connection', (socket) => {
     socket.on('getIncomingQuests', async (msg) => {
         const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
         io.sockets.emit('incoming', allIncomingQuests);
+    });
+    socket.on('acceptEmployee', async ({chatId, employeeId}) => {
+        employeeModel.addEmployeeChatRelation(employeeId, chatId);
+        const allIncomingQuests = await employeeModel.getIncomingQuests(employeeId);
+        io.sockets.emit('incoming-accept', allIncomingQuests);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');

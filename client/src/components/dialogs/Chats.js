@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import {SERVER_URL} from "../../utils/consts";
 import {getIncomingMessages} from "../../utils/requests";
 import Quest from "./quests/Quest";
+import {dialogModes} from "../../utils/dialogModes";
 
 const Chats = ({dialogMode, curEmployee}) => {
     const employeeId = curEmployee.id;
@@ -22,6 +23,11 @@ const Chats = ({dialogMode, curEmployee}) => {
             console.log(incomingQuestsSocket);
             setIncomingQuests(incomingQuestsSocket);
         })
+        // socket.current.on('incoming-accept', (incomingQuestsSocket) => {
+        //     setIncomingQuests(incomingQuestsSocket);
+        //     setChosenQuest(incomingQuestsSocket[0]);
+        //     dialogMode = dialogModes.MY;
+        // })
         getIncomingMessages(employeeId)
             .then((res) => {
                 console.log(res)
@@ -49,9 +55,8 @@ const Chats = ({dialogMode, curEmployee}) => {
             </div>
             {
                 chosenQuest &&
-                <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket}/>
+                <Chat dialogMode={dialogMode} chatId={chosenQuest.chat_id} socket={socket} curEmployee={curEmployee}/>
             }
-
         </div>
     );
 };
