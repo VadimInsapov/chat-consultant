@@ -14,7 +14,7 @@ const Quest = ({thisQuest, chosenQuest, idQuest, setChosenQuest, dialogMode}) =>
                      }}
                  onClick={()=> setChosenQuest(thisQuest)}
             >
-                <div className="fs-6">{thisQuest.lastName} {thisQuest.name}</div>
+                <div className="fs-6">{thisQuest.last_name} {thisQuest.name}</div>
             </div>
 
         </>

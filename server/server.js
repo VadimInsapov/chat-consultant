@@ -47,8 +47,8 @@ io.on('connection', (socket) => {
         const messageInfo = await messageController.create(body, msg);
         console.log(messageInfo)
         socket.emit('greet', messageInfo);
-        const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
-        io.sockets.emit('incoming', allIncomingQuests);
+        // const allIncomingQuests = await employeeModel.getIncomingQuests(msg.employeeId);
+        io.sockets.emit('greetUser',{});
     });
     socket.on('message', async (msg) => {
         const body = msg.body;

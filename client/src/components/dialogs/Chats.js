@@ -15,9 +15,12 @@ const Chats = ({dialogMode, curEmployee}) => {
 
     useEffect(() => {
         socket.current = io(SERVER_URL);
+        socket.current.on('greetUser', (incomingQuestsSocket) => {
+            socket.current.emit("getIncomingQuests", {employeeId});
+        })
         socket.current.on('incoming', (incomingQuestsSocket) => {
+            console.log(incomingQuestsSocket);
             setIncomingQuests(incomingQuestsSocket);
-            setChosenQuest(incomingQuestsSocket[0]);
         })
         getIncomingMessages(employeeId)
             .then((res) => {

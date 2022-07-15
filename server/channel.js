@@ -70,10 +70,12 @@ async function doThis(channelId) {
     }
 
     socket.on("greet", function (msg) {
+        console.log(msg)
         const userId = msg.user_id;
         const chatId = msg.chat_id;
         sessionStorage.setItem("questInfo", JSON.stringify({userId, chatId}));
         socket.on(chatId, getMessagesHandlerByChat);
+        socket.emit('getMessages', {chatId});
     });
 
 

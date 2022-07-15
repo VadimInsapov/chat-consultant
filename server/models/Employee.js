@@ -105,7 +105,6 @@ class Employee extends User {
             .from(QUEST.tableName)
             .join(USER.tableName, `${USER.tableName}.${USER.columns.ID}`, '=', `${QUEST.tableName}.${QUEST.columns.USER_ID}`)
             .whereIn([QUEST.columns.CHAT_ID], incomingChatsIds)
-        console.log(employeeChannelsChatsQuests);
 
 
         let employeeChannelsChatsMessages = await knex
@@ -168,7 +167,6 @@ class Employee extends User {
             .from(QUEST.tableName)
             .join(USER.tableName, `${USER.tableName}.${USER.columns.ID}`, '=', `${QUEST.tableName}.${QUEST.columns.USER_ID}`)
             .whereIn([QUEST.columns.CHAT_ID], incomingChatsIds)
-        console.log(employeeChannelsChatsQuests);
 
         return employeeChannelsChatsQuests;
     }

@@ -12,11 +12,9 @@ const Chat = ({dialogMode, chatId, socket}) => {
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         socket.current = io(SERVER_URL);
-        console.log({chatId})
         socket.current.emit("getMessages", {chatId});
         socket.current.on(chatId, (messagesSocket) => {
             setMessages(messagesSocket);
-            console.log(messages);
         })
     }, [chatId]);
     return (
